@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <!-- Add a Form with the following Inputs (and Validators)
+           1) Mail address (should not be empty and should be an email address)
+           2) A Dropdown which allows the user to select from three different Subscriptions ("Basic", "Advanced", "Pro")
+              Set "Advanced" as Default
+           3) A Password field (should not be empty)
+           field)
+           4) A Submit Button
+
+           Display a warning message if the Form is invalid AND was touched. Display a warning message below each input if it's invalid.
+
+           Upon submitting the form, you should simply print the Value of the Form to the Console.
+           Optionally, display it in your template.
+      -->
+      <form #signupForm="ngForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input class="form-control" type="email" id="email" ngModel name="email" required email #email="ngModel">
+          <span class="help-block" style="color: #ef4048;"
+          *ngIf="!email.valid && email.touched">Please enter a valid Email Address</span>
+        </div>
+
+        <div class="form-group">
+          <label for="subscription">Choose a subscription</label>
+          <select name="subscription" id="subscription" [ngModel]="selectedSubscription" class="form-control">
+            <option *ngFor="let data of subscriptions" [value]="data">
+              {{data}}
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="apssword">Password</label>
+          <input [type]="password" id="Password" name="password" ngModel required class="form-control" #Password="ngModel"
+            style="display: inline;">
+          <span (click)="onClick()" style="position: absolute;right: 22px;top: 180px;cursor: pointer;">
+            <i class="fa fa-eye" aria-hidden="true" *ngIf="!show"></i>
+            <i class="fa fa-eye-slash" aria-hidden="true" *ngIf="show"></i>
+          </span>
+          <span class="help-block" style="color: #ef4048;"
+          *ngIf="!Password.valid && Password.touched">Please enter a valid Password</span>
+        </div>
+
+        <p *ngIf="!signupForm.valid && signupForm.touched">The Form is invalid</p>
+        <button class="btn btn-primary" type="submit" [disabled]="!Password.valid">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
